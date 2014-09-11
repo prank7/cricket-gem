@@ -1,0 +1,142 @@
+#!/usr/bin/env ruby
+require_relative '../lib/cricket/team'
+
+puts "\n"
+puts "Welcome To a Cricket Game!".center(100,"*")
+
+game_format = "Odi"
+
+loop do
+	puts "\nWhat Format do you want to play(Test, Odi, T20)?"
+	game_format = gets.chomp.capitalize
+
+	case game_format
+	when "Odi","Test","T20"
+		game_format = game_format.capitalize
+		break
+	else 
+		puts "Please Enter 'Odi' or 'Test' or 'T20' only"
+	end
+end
+
+players_in_a_side = 0
+
+loop do
+	puts "\nHow many a side?"
+	players_in_a_side = gets.chomp
+
+	case players_in_a_side
+	when /^\d+/
+		players_in_a_side = players_in_a_side.to_i
+		break
+	else 
+		puts "Please Enter a Number"
+	end
+end
+
+
+# Get first team Name from the User
+puts "\nName Your First Team:"
+first_team = gets.chomp
+team1 = Cricket::Team.new(first_team)
+
+# Get first team PlayerNames from the User
+team1_players = []
+
+players_in_a_side.times do |number|
+	puts "Enter Name of Player#{number+1} in #{first_team}:"
+	team1_players[number] = Cricket::Player.new(gets.chomp)
+	team1.add_Players(team1_players[number])
+end
+
+team1.displayTeam
+
+# Get Second team Name from the User
+puts "\nName Your Second Team:"
+second_team = gets.chomp
+team2 = Cricket::Team.new(second_team)
+
+# Get Second team PlayerNames from the User
+team2_players = []
+
+players_in_a_side.times do |number|
+	puts "Enter Name of Player#{number+1} in #{second_team}:"
+	team2_players[number] = Cricket::Player.new(gets.chomp)
+	team2.add_Players(team1_players[number])
+end
+
+team2.displayTeam
+
+puts "\nEnter anything to play the Match!"
+gets
+
+puts "Match Details".center(100, "*")
+# p1 = Player.new("Rahul")
+# # puts p1
+# # puts p1.playODI(77)
+# # puts p1.playTest(152)
+# # puts p1.playT20(34)
+
+
+# p2 = Player.new("Sachin")
+# # puts p2                                                       
+# # puts p2.playODI(77)
+# # puts p2.playTest(152)
+
+
+
+
+# p3 = Player.new("Dhoni")
+# puts p3
+# puts p3.playT20(20)
+# puts p2.nickname
+
+
+### Arrays ###
+
+#players = []
+#players[0] = p1
+#players.push(p2)
+#players << p3
+#puts "#{players} #{players.size}"
+
+
+# a1 = Player.new("Ponting")
+
+# a2 = Player.new("Clark")
+
+# a3 = Player.new("Faulkner")
+
+
+
+# team1.add_Players(p1)
+# team1.add_Players(p2)
+# team1.add_Players(p3)
+
+
+
+
+team1.play(game_format)
+team2.play(game_format)
+
+puts "Result".center(100,"*")
+
+if team1.total > team2.total
+	puts "\nTeam #{team1.name} won by #{team1.total-team2.total} runs! Congrats!"
+elsif team1.total < team2.total
+	puts "\nTeam #{team2.name} won by #{team2.total-team1.total} runs! Congrats!"
+else
+	puts "\nWoah! Both teams Scored #{team1.total} runs! Match Ends in Tie!"
+end
+
+
+puts "\nThanks for playing this dumb game of Cricket!"
+	
+
+# aus = Team.new("Australia")
+# aus.add_Players(a1)
+# aus.add_Players(a2)
+# aus.add_Players(a3)
+
+# aus.displayTeam
+# aus.play("T20")
