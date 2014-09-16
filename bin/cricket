@@ -62,7 +62,7 @@ team2_players = []
 players_in_a_side.times do |number|
 	puts "Enter Name of Player#{number+1} in #{second_team}:"
 	team2_players[number] = Cricket::Player.new(gets.chomp)
-	team2.add_Players(team1_players[number])
+	team2.add_Players(team2_players[number])
 end
 
 team2.displayTeam
